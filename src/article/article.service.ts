@@ -10,13 +10,15 @@ export class ArticleService {
     constructor(@InjectModel(Article.name) private articleModel: ArticleModel) {
     }
 
-    getArticles(): ArticleListDto {
-        return new ArticleListDto(this.getArticleList());
+    async getArticles(): Promise<ArticleListDto> {
+        return new ArticleListDto(await this.getArticleList());
     }
 
-    getArticleList(): ArticleDto[] {
-        return new Array(10).fill(null).map((_, index) => {
-            return new ArticleDto(`${index} count title`);
+    async  getArticleList() : Promise<ArticleDto[]> {
+        const articles = await this.articleModel.find().exec();
+
+        return articles.map((article)=> {
+            return new ArticleDto(article);
         });
     }
 

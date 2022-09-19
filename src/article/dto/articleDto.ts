@@ -1,30 +1,31 @@
+import {Article} from "../schemas/article.schema";
+
 export class ArticleDto {
+  readonly title: string;
   readonly slug: string;
   readonly description: string;
   readonly body: string;
   readonly tagList: string[];
-  readonly createdAt: string;
-  readonly updatedAt: string;
+  readonly createdAt: Date;
+  readonly updatedAt: Date;
   readonly favorited: boolean;
   readonly favoritesCount: number;
   readonly author: Auther;
 
   constructor(
-      readonly title: string
+      article: Readonly<Article>
   ) {
-    this.description = '';
-    this.body = 'zz';
-    this.tagList = ['tag one', 'tag tow'];
-    this.createdAt = '2021-11-24T12:11:08.212Z';
-    this.updatedAt ='2021-11-24T12:11:08.212Z';
-    this.favorited = false;
-    this.favoritesCount = 3860;
-    this.slug = 'z';
-    this.author = {
-      username: "Gerome",
-      bio: null,
-      image: "https://api.realworld.io/images/demo-avatar.png",
-      following: false
-    }
+    this.title = article.title;
+    this.description = article.description;
+    this.body = article.body;
+    this.tagList = article.tagList;
+    this.createdAt = article.createdAt;
+    this.updatedAt =article.updatedAt;
+    this.favorited = article.favorited;
+    this.favoritesCount = article.favoritesCount;
+    this.slug = article.slug.toString();
+    this.author = article.author;
   }
+
+
 }

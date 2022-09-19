@@ -9,8 +9,8 @@ export class ArticleController {
     constructor(private readonly articleService: ArticleService) {}
 
     @Get()
-    getArticle(@Query('limit') limit, @Query('offset') offset): ArticleListDto {
-        return this.articleService.getArticles();
+    async getArticle(@Query('limit') limit, @Query('offset') offset): Promise<ArticleListDto> {
+        return await this.articleService.getArticles();
     }
 
     @Post()
