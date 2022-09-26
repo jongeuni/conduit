@@ -1,13 +1,10 @@
 import {Module} from '@nestjs/common';
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
-import {ArticleController} from './article/article.controller';
-import {ArticleService} from "./article/article.service";
-import {AuthController} from './auth/auth.controller';
 import {MongooseModule} from "@nestjs/mongoose";
-import {AuthService} from "./auth/auth.service";
 import {ArticleModule} from "./article/article.module";
 import {AuthModule} from "./auth/auth.module";
+import {TokenModule} from "./auth/token/token.module";
 
 @Module({
     imports: [
@@ -15,7 +12,8 @@ import {AuthModule} from "./auth/auth.module";
             dbName: 'conduit',
         }),
         ArticleModule,
-        AuthModule
+        AuthModule,
+        TokenModule
     ],
     controllers: [AppController],
     providers: [AppService],
