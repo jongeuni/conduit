@@ -7,17 +7,18 @@ import {ArticleCreateRq} from "./rqrs/articleCreateRq";
 
 @Injectable()
 export class ArticleService {
-    constructor(@InjectModel(Article.name) private articleModel: ArticleModel) {
+    constructor(@InjectModel(Article.name) private articleModel: ArticleModel,
+               ) {
     }
 
     async getArticles(): Promise<ArticleListDto> {
         return new ArticleListDto(await this.getArticleList());
     }
 
-    async  getArticleList() : Promise<ArticleDto[]> {
+    async getArticleList(): Promise<ArticleDto[]> {
         const articles = await this.articleModel.find().exec();
 
-        return articles.map((article)=> {
+        return articles.map((article) => {
             return new ArticleDto(article);
         });
     }
