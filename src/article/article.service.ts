@@ -1,9 +1,15 @@
-import {Injectable} from "@nestjs/common";
+import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
 import {ArticleListDto} from "./dto/articleListDto";
 import {ArticleDto} from "./dto/articleDto";
 import {InjectModel} from "@nestjs/mongoose";
 import {Article, ArticleModel} from "./schemas/article.schema";
 import {ArticleCreateRq} from "./rqrs/articleCreateRq";
+
+class ArticleNotExistException extends HttpException {
+    constructor() {
+        super('아티클이 존재하지 않습니다', HttpStatus.NOT_FOUND);
+    }
+}
 
 @Injectable()
 export class ArticleService {
@@ -86,5 +92,15 @@ export class ArticleService {
 
         }
 
+    }
+
+    async deleteArticle(slug: string) {
+        if (await this.articleModel.exists({slug})) {
+            await this.articleModel.deleteOne({
+                slug: slug
+            }).exec();
+        } else {
+            throw new ArticleNotExistException();
+        }
     }
 }

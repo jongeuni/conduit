@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Post, Put, Query, Request, UseGuards} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, Request, UseGuards} from '@nestjs/common';
 import {ArticleListDto} from './dto/articleListDto';
 import {ArticleService} from "./article.service";
 import {ArticleCreateRq} from "./rqrs/articleCreateRq";
@@ -22,6 +22,12 @@ export class ArticleController {
     @Put(':slug')
     async updateArticle(@Body('article') rq: ArticleUpdateRq, @Param('slug') slug){
         return await this.articleService.updateArticle(rq.title, slug);
+    }
+
+    @Delete(':slug')
+    @HttpCode(204)
+    async deleteArticle (@Param('slug') slug) {
+        await this.articleService.deleteArticle(slug);
     }
 
 }
