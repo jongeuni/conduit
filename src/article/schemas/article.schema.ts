@@ -22,6 +22,8 @@ export const ArticleAuthorSchema = SchemaFactory.createForClass(ArticleAuthor);
 
 @Schema()
 export class Article {
+    @Prop()
+    slug: string;
 
     @Prop()
     title: string;
@@ -35,19 +37,16 @@ export class Article {
     @Prop({type: [String]})
     tagList: string[];
 
-    @Prop()
-    slug: string;
-
     @Prop({type: Date, default: Date.now})
     createdAt: Date;
 
-    @Prop({type: Date, default: null})
+    @Prop({type: Date, default: Date.now})
     updatedAt: Date;
 
     @Prop({type: Boolean, default: false})
     favorited: boolean;
 
-    @Prop()
+    @Prop({default:0})
     favoritesCount: number;
 
     @Prop({type: ArticleAuthorSchema})

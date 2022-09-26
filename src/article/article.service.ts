@@ -22,8 +22,14 @@ export class ArticleService {
         });
     }
 
-    async createArticle(rq: ArticleCreateRq): Promise<Article> {
-        const article: CreateArticleDto = {
+    createRandomSlug() {
+        return Math.random().toString();
+    }
+
+    async createArticle(rq: ArticleCreateRq, user): Promise<ArticleRs> {
+
+
+        const articleDto: CreateArticleDto = {
             ...rq,
             slug: 'slug',
             author: {
