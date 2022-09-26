@@ -52,3 +52,38 @@ export class ArticleService {
             }
         }
     }
+
+
+    async updateArticle(title: string, slug: string) {
+        console.log(slug);
+
+        const article = await this.articleModel.findOneAndUpdate(
+            {
+                slug: slug
+            },
+            {
+                title: title
+            },
+            {
+                new: true
+            }
+        ).exec();
+
+        return {
+            article: {
+                author: article?.author ?? '',
+                body: article.body,
+                createdAt: article.createdAt,
+                description: article.description,
+                favorited: article.favorited,
+                favoritesCount: article.favoritesCount,
+                slug: article.slug,
+                tagList: article.tagList,
+                title: article.title,
+                updatedAt: article.updatedAt
+            }
+
+        }
+
+    }
+}

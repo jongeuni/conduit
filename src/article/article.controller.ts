@@ -1,8 +1,8 @@
-import {Body, Controller, Get, HttpCode, Post, Query} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, Put, Query, Request, UseGuards} from '@nestjs/common';
 import {ArticleListDto} from './dto/articleListDto';
 import {ArticleService} from "./article.service";
 import {ArticleCreateRq} from "./rqrs/articleCreateRq";
-import {ArticleCreateRs} from "./rqrs/articleCreateRs";
+import {JwtAuthGuard} from "../auth/token/jwt.auth.guard";
 
 @Controller('api/articles')
 export class ArticleController {
@@ -17,6 +17,11 @@ export class ArticleController {
     @UseGuards(JwtAuthGuard)
     async createArticle(@Body("article") articleRq: ArticleCreateRq, @Request() req){
         return await this.articleService.createArticle(articleRq, req.user);
+    }
+
+    @Put(':slug')
+    async updateArticle(@Body('article') rq: ArticleUpdateRq, @Param('slug') slug){
+        return await this.articleService.updateArticle(rq.title, slug);
     }
 
 }
