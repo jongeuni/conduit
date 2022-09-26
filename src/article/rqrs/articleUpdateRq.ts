@@ -1,0 +1,3 @@
+interface ArticleUpdateRq {
+    title:string;
+}

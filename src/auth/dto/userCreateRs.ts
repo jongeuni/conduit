@@ -1,0 +1,4 @@
+
+interface UserCreateRs{
+    user:AuthRs;
+}
