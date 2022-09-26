@@ -14,9 +14,9 @@ export class ArticleController {
     }
 
     @Post()
-    @HttpCode(201)
-    async createArticle(@Body("article") rq: ArticleCreateRq): Promise<ArticleCreateRs> {
-        return await this.articleService.createArticle(rq);
+    @UseGuards(JwtAuthGuard)
+    async createArticle(@Body("article") articleRq: ArticleCreateRq, @Request() req){
+        return await this.articleService.createArticle(articleRq, req.user);
     }
 
 }

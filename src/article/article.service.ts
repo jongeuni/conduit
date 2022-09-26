@@ -31,14 +31,24 @@ export class ArticleService {
 
         const articleDto: CreateArticleDto = {
             ...rq,
-            slug: 'slug',
+            slug: this.createRandomSlug(),
             author: {
-                username: 'user name',
-                bio: '?',
-                image: 'image',
-                following: false
+                username: user.username,
+                bio: user.bio,
+                image: user.image,
+                following: user.following
             }
         };
-        return await this.articleModel.create(article);
+
+        const article = await this.articleModel.create(articleDto);
+
+        return {
+            article: {
+                ...articleDto,
+                createdAt: article.createdAt,
+                updatedAt: article.updatedAt,
+                favorited: article.favorited,
+                favoritesCount: article.favoritesCount
+            }
+        }
     }
-}
