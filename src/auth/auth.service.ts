@@ -14,6 +14,25 @@ export class AuthService {
 
     }
 
+    async registration(rq: UserCreateRq): Promise<UserCreateRs> {
+
+        rq.password= await bcrypt.hash(rq.password, 10);
+        const user = await this.authModel.create(rq);
+
+        return {
+            user: {
+                username: user.username,
+                bio: user.bio,
+                image: user.image,
+                email: user.email,
+                token: this.jwtService.sign(this.getPayload(user), {
+                    secret: jwtConstants.secret
+                })
+            }
+        };
+    }
+
+
     async login(rq: LoginRq) {
 
         const user = await this.authModel.findOne({
